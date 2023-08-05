@@ -61,5 +61,4 @@ if __name__ == "__main__":
 
     password = generate_xkcd_password(words, num_words, num_caps, num_numbers, num_symbols)
 
-    print("Generated XKCD-style password:")
     print(password)
