@@ -1,3 +1,4 @@
+#!/Users/yash/opt/miniconda3/bin/python
 import argparse
 import random
 
