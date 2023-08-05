@@ -18,7 +18,7 @@ def generate_xkcd_password(word_list, num_words=4, num_caps=0, num_numbers=0, nu
         word_index = random.randint(0, num_words - 1)
         words[word_index] = words[word_index].capitalize()
 
-    password = '-'.join(words)
+    password = ''.join(words)
 
     numbers = ''.join(str(random.randint(0, 9)) for _ in range(num_numbers))
     symbols = ''.join(random.choice('~!@#$%^&*.:;') for _ in range(num_symbols))
