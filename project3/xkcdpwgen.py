@@ -1,0 +1,53 @@
+import argparse
+import random
+
+
+def load_words(file_path):
+    with open(file_path, 'r') as file:
+        return file.read().splitlines()
+
+
+def generate_xkcd_password(word_list, num_words=4, num_caps=0, num_numbers=0, num_symbols=0):
+    if num_words < 1:
+        num_words = 1
+
+    words = random.sample(word_list, num_words)
+
+    if num_caps > num_words:
+        num_caps = num_words
+
+    for i in range(num_caps):
+        word = random.choice(words)
+        words.remove(word)
+        words.insert(i, word.capitalize())
+
+    password = ''.join(words)
+
+    if num_numbers > 0:
+        for _ in range(num_numbers):
+            password += str(random.randint(0, 9))
+
+    symbols = '~!@#$%^&*.:;'
+    if num_symbols > 0:
+        for _ in range(num_symbols):
+            password += random.choice(symbols)
+
+    return password
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Generate a secure, memorable password using the XKCD method")
+    parser.add_argument("-w", "--words", type=int, default=4, help="include WORDS words in the password (default=4)")
+    parser.add_argument("-c", "--caps", type=int, default=0,
+                        help="capitalize the first letter of CAPS random words (default=0)")
+    parser.add_argument("-n", "--numbers", type=int, default=0,
+                        help="insert NUMBERS random numbers in the password (default=0)")
+    parser.add_argument("-s", "--symbols", type=int, default=0,
+                        help="insert SYMBOLS random symbols in the password (default=0)")
+    args = parser.parse_args()
+
+    dictionary_file = 'words.txt'
+    words = load_words(dictionary_file)
+
+    password = generate_xkcd_password(words, args.words, args.caps, args.numbers, args.symbols)
+    print(password)
